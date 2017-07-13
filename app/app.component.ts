@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Alert, MessageService} from "./message.service";
 
 declare var module: any;
 @Component({
@@ -7,6 +8,11 @@ declare var module: any;
 	moduleId: module.id
 })
 
-export class AppComponent{
+export class AppComponent implements OnInit{
+	messages: Alert[];
+	constructor(private messageService: MessageService){}
+	ngOnInit(): void{
+		this.messages = this.messageService.messages;
+	}
 }
 

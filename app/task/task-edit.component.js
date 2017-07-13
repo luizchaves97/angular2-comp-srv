@@ -10,20 +10,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var task_1 = require("./task");
+var task_service_1 = require("./task.service");
+var router_1 = require("@angular/router");
+var message_service_1 = require("../message.service");
 var TaskEditComponent = (function () {
-    function TaskEditComponent() {
+    function TaskEditComponent(taskService, route, router, messageService) {
+        this.taskService = taskService;
+        this.route = route;
+        this.router = router;
+        this.messageService = messageService;
     }
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", task_1.Task)
-    ], TaskEditComponent.prototype, "task", void 0);
+    TaskEditComponent.prototype.submit = function () {
+        this.messageService.messages.push({
+            type: 'success',
+            message: 'Tarefa editada com sucesso!'
+        });
+        this.router.navigate(['tasks', 'list']);
+    };
+    TaskEditComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.forEach(function (params) {
+            var id = +params['id'];
+            _this.task = _this.taskService.getTask(id);
+            if (!_this.task) {
+                alert('Tarefa não existe');
+            }
+        });
+    };
     TaskEditComponent = __decorate([
         core_1.Component({
             selector: 'task-edit',
             templateUrl: 'task-edit.component.html',
             moduleId: module.id
-        })
+        }),
+        __metadata("design:paramtypes", [task_service_1.TaskService, router_1.ActivatedRoute, router_1.Router, message_service_1.MessageService])
     ], TaskEditComponent);
     return TaskEditComponent;
 }());

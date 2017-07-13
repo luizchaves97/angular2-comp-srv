@@ -22,6 +22,8 @@
             '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
             // other libraries
             'rxjs': 'npm:rxjs',
+            'moment': 'npm:moment/moment.js',
+            'ngx-bootstrap': 'npm:ngx-bootstrap/bundles/ngx-bootstrap.umd.min.js'
         },
         // como carregar os arquivos quando não declaramos nomes ou extensões
         packages: {

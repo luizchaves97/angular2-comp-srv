@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row">
         <h2>Minhas Tarefas</h2>
+        <p>
+            <a routerLink="/tasks/create" class="btn btn-success">Nova tarefa</a>
+        </p>
         <table class="table">
             <thead>
             <tr>
@@ -14,7 +17,10 @@
                 <td>{{task.id}}</td>
                 <td>{{task.name}}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" (click)="selectTask(task)">
+                    <!--<a class="btn btn-primary" [routerLink]="['/tasks','edit',task.id]">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>-->
+                    <button type="button" class="btn btn-primary" (click)="goToEdit(task.id)">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" class="btn btn-danger" (click)="deleteTask(task.id)">
@@ -24,6 +30,5 @@
                 </tr>
             </tbody>
         </table>
-        <task-edit [task]="selectedTask"></task-edit>
     </div>
 </div>

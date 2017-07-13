@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Task} from './task';
 import {TaskService} from "./task.service";
+import {Router} from "@angular/router";
 
 
 
@@ -14,25 +15,22 @@ declare var module: any;
 
 })
 
-export class TaskListComponent{
+export class TaskListComponent implements OnInit{
     tasks:Task[];
     selectedTask:Task;
-    taskService:TaskService;
 
-    constructor(){
-        this.taskService = new TaskService();
-        this.tasks = this.taskService.getTasks();
-    }
+    constructor(private taskService: TaskService, private router: Router){}
 
-    selectTask(task){
-        this.selectedTask = task;
+    goToEdit(id: number){
+        this.router.navigate(['tasks','edit',id]);
     }
 
     deleteTask(id: number){
-        let index = this.tasks.findIndex(item => item.id == id);
-        if(index != -1){
-            this.tasks.splice(index,1);
-        }
+        this.taskService.deleteTask(id);
+    }
+
+    ngOnInit():void{
+        this.tasks = this.taskService.getTasks();
     }
 }
 

@@ -11,19 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var task_service_1 = require("./task.service");
+var router_1 = require("@angular/router");
 var TaskListComponent = (function () {
-    function TaskListComponent() {
-        this.taskService = new task_service_1.TaskService();
-        this.tasks = this.taskService.getTasks();
+    function TaskListComponent(taskService, router) {
+        this.taskService = taskService;
+        this.router = router;
     }
-    TaskListComponent.prototype.selectTask = function (task) {
-        this.selectedTask = task;
+    TaskListComponent.prototype.goToEdit = function (id) {
+        this.router.navigate(['tasks', 'edit', id]);
     };
     TaskListComponent.prototype.deleteTask = function (id) {
-        var index = this.tasks.findIndex(function (item) { return item.id == id; });
-        if (index != -1) {
-            this.tasks.splice(index, 1);
-        }
+        this.taskService.deleteTask(id);
+    };
+    TaskListComponent.prototype.ngOnInit = function () {
+        this.tasks = this.taskService.getTasks();
     };
     TaskListComponent = __decorate([
         core_1.Component({
@@ -31,7 +32,7 @@ var TaskListComponent = (function () {
             templateUrl: 'task-list.component.html',
             moduleId: module.id
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [task_service_1.TaskService, router_1.Router])
     ], TaskListComponent);
     return TaskListComponent;
 }());
